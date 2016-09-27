@@ -88,14 +88,32 @@ class UpcTable(object):
         return records_set
 
 
-    def insert(self, record_to_add=[]):
+    def insert(self, records_to_add=[]):
         import pymysql
         conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='tomate23',
                                db='inventaire')
-        for rec in record_to_add:
+        for rec in records_to_add:
             insert_string = "INSERT INTO upc(number,description,size_weight,source) VALUES ('{}','{}','{}','{}')".format(rec.number(), rec.description(), rec.size_weight(), rec.source())
             cur = conn.cursor()
             cur.execute(insert_string)
+        cur.close()
+        conn.commit()
+        conn.close()
+
+    def delete(self, numbers_to_delete=[]):
+        import pymysql
+        delete_string = "DELETE FROM upc "
+        if numbers_to_delete:
+            number_list = ""
+            for number in numbers_to_delete:
+                if len(number_list) > 0:
+                    number_list = "{}{}".format(number_list, ',')
+                number_list = "{}{}{}{}".format(number_list, '"', str(number), '"')
+            delete_string = "{} {}{}{}".format(delete_string, "WHERE number in (", number_list, ')')
+
+        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='tomate23', db='inventaire')
+        cur = conn.cursor()
+        cur.execute(delete_string)
         cur.close()
         conn.commit()
         conn.close()

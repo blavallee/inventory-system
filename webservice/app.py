@@ -5,6 +5,7 @@ import json
 
 app = Flask(__name__)
 
+
 @app.route('/upcs', methods=['POST'])
 @app.route('/upcs/<code>', methods=['GET'])
 def upcs(code=None):
@@ -23,9 +24,11 @@ def upcs(code=None):
         if "size_weight" in request.json:
             size_weight = request.json["size_weight"]
 
-        upc_table.UpcTable().insert([upc_table.UpcRecord(request.json["number"], request.json["description"], size_weight, request.json["source"])])
+        upc_table.UpcTable().insert([upc_table.UpcRecord(request.json["number"], request.json["description"],
+                                                         size_weight, request.json["source"])])
 
         return ('{}', 201, [])
- 
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
