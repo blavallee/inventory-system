@@ -12,14 +12,13 @@ INSERT IGNORE INTO upc (number, description, size_weight, source) VALUES ('00604
 INSERT IGNORE INTO upc (number, description, size_weight, source) VALUES ('0069000014257','355ml/12fl.oz. Canadian Diet Pepsi','355ml','upc_db');
 
 CREATE TABLE IF NOT EXISTS stock (
-        upc VARCHAR(50) NOT NULL PRIMARY KEY,
+        sequence_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        upc VARCHAR(50) NOT NULL,
         description VARCHAR(500) NOT NULL,
         expiration DATE NOT NULL,
         date_achat DATE NOT NULL,
         CONSTRAINT `fk_new_table_1`
         FOREIGN KEY (`upc`)
         REFERENCES `inventaire`.`upc` (`number`)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
         );
 

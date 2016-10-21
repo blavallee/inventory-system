@@ -78,7 +78,7 @@ class UpcTable(object):
                 number_list = "{}{}{}{}".format(number_list, '"', str(number), '"')
             select_string = "{} {}{}{}".format(select_string, "where number in (", number_list, ')')
 
-        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='tomate23', db='inventaire')
+        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='', db='inventaire')
         cur = conn.cursor()
         cur.execute(select_string)
         for r in cur:
@@ -90,7 +90,7 @@ class UpcTable(object):
 
     def insert(self, records_to_add=[]):
         import pymysql
-        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='tomate23',
+        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='',
                                db='inventaire')
         for rec in records_to_add:
             insert_string = "INSERT INTO upc(number,description,size_weight,source) VALUES ('{}','{}','{}','{}')".format(rec.number(), rec.description(), rec.size_weight(), rec.source())
@@ -111,7 +111,7 @@ class UpcTable(object):
                 number_list = "{}{}{}{}".format(number_list, '"', str(number), '"')
             delete_string = "{} {}{}{}".format(delete_string, "WHERE number in (", number_list, ')')
 
-        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='tomate23', db='inventaire')
+        conn = pymysql.connect(host='0.0.0.0', unix_socket='/tmp/mysql.sock', user='root', passwd='', db='inventaire')
         cur = conn.cursor()
         cur.execute(delete_string)
         cur.close()
